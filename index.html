@@ -1960,6 +1960,15 @@
           document.getElementById('disclaimer-overlay').style.display = 'none';
         }
 
+        function openExternal(url) {
+          if (window.AndroidBridge) {
+            window.location.href = url;
+          } else {
+            var w = window.open(url, '_blank', 'noopener,noreferrer');
+            if (!w) window.location.href = url;
+          }
+        }
+
         function init() {
           const nc = document.getElementById('home-nuclide-count');
           if (nc) nc.textContent = NUCLIDES.length;
@@ -6314,7 +6323,7 @@ Whole-body effective dose (typical):
           <div style="font-size:11px;color:#888;line-height:1.6;font-style:italic">${g.citation}</div>
           <div style="font-size:10px;color:#555;margin-top:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
             <span>DOI: <span style="color:${g.color}">${g.doi || 'N/A'}</span></span>
-            ${g.doi ? `<a href="https://doi.org/${g.doi}" onclick="event.stopPropagation();window.open('https://doi.org/${g.doi}','_blank','noopener,noreferrer');return false;" style="background:${g.color}22;border:1px solid ${g.color}55;color:${g.color};padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;text-decoration:none;display:inline-block;white-space:nowrap;cursor:pointer;">Open Guideline ↗</a>` : ''}
+            ${g.doi ? `<a href="https://doi.org/${g.doi}" onclick="event.stopPropagation();openExternal('https://doi.org/${g.doi}');return false;" style="background:${g.color}22;border:1px solid ${g.color}55;color:${g.color};padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;text-decoration:none;display:inline-block;white-space:nowrap;cursor:pointer;">Open Guideline ↗</a>` : ''}
           </div>
         </div>
         <!-- Sections -->
